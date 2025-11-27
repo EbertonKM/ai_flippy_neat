@@ -1,42 +1,15 @@
-import os
+from Abstract.SceneElement import SceneElement
 import pygame
+import os
 import config
 
-class Background:
-    SPEED = config.BACKGROUND_SPEED
-    CHUNKS = 3
-
-    def __init__(self):
-        self.bg_sprite = None
-        self.chunk_width = 0
-        self.y = 0
-        self._chunks = []
-
+class Background(SceneElement):
     def load_sprite(self):
-        self.bg_sprite = pygame.transform.scale(
-            pygame.image.load(os.path.join(
-                config.TEXTURE_DIR, "background-day.png"
-            )).convert_alpha(), (config.WINDOW_SIZE)
-        )
+        sprite = pygame.image.load(os.path.join(
+            config.TEXTURES_DIR, self.sprite_name
+            )).convert_alpha()
+        self.bg_sprite = pygame.transform.scale(sprite, config.WINDOW_SIZE)
         self.chunk_width = self.bg_sprite.get_width()
 
-        for x in range(self.CHUNKS):
+        for x in range(self.chunk_count):
             self._chunks.append([self.bg_sprite, x * self.chunk_width])
-
-    def move(self, speed=None):
-        current_speed = speed if speed is not None else self.SPEED
-        for i, chunk in enumerate(self._chunks):
-            chunk[1] -= current_speed
-            if chunk[1] < -self.chunk_width:
-                chunk[1] = self.get_last_chunk_offset() + self.chunk_width
-
-    def draw(self, screen):
-        for chunk in self._chunks:
-            screen.blit(chunk[0], (chunk[1], self.y))
-    
-    def get_last_chunk_offset(self):
-        offset = 0
-        for chunk in self._chunks:
-            if chunk[1] > offset:
-                offset = chunk[1]
-        return offset

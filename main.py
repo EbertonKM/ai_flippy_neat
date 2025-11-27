@@ -1,5 +1,4 @@
 import pygame
-import os
 import config
 
 from GameObjects.Background import Background
@@ -11,12 +10,12 @@ pygame.init()
 
 # Configurações da tela
 screen = pygame.display.set_mode(config.WINDOW_SIZE)           # Define o tamanho da tela
-pygame.display.set_caption("Pássaro Batedor de Asas")
+pygame.display.set_caption("Flappy")
 
 # Carrega o background
-background = Background()
+background = Background(sprite_name="background-day.png", speed=config.BACKGROUND_SPEED, chunk_count=3)
 background.load_sprite()
-floor = Floor(y=400)
+floor = Floor(sprite_name="base.png", speed=config.BACKGROUND_SPEED*3, chunk_count=3, y=400)
 floor.load_sprite()
 
 # Carrega o passáro
