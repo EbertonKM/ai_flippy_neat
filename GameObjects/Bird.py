@@ -41,3 +41,9 @@ class Bird:
         else:
             if self.angle > -90:
                 self.angle -= config.ROTATION_SPEED
+
+    # Exibe o nome do passáro acima dele
+    def show_name(self, screen):
+        font = pygame.font.Font(None, 20)
+        name_text = font.render(self.name, True, (255, 255, 255))
+        screen.blit(name_text, (self.x, self.y - 20))

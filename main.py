@@ -4,6 +4,7 @@ import config
 from GameObjects.Background import Background
 from GameObjects.Floor import Floor
 from GameObjects.Bird import Bird
+from UserInterface.InterfaceManager import InterfaceManager
 
 # Inicializar o Pygame 
 pygame.init()
@@ -14,6 +15,8 @@ clock = pygame.time.Clock()
 # Configurações da tela
 screen = pygame.display.set_mode(config.WINDOW_SIZE)           # Define o tamanho da tela
 pygame.display.set_caption("Flappy")
+
+user_interface = InterfaceManager(screen, clock)
 
 # Carrega o background
 background = Background(sprite_name="background-day.png", speed=config.BACKGROUND_SPEED, chunk_count=3)
@@ -50,13 +53,9 @@ while(running):
     # Atualiza o passário
     bird.move()
     screen.blit(bird.load_frame(), (bird.x, bird.y))
+    bird.show_name(screen)
 
-    # Começa a gambiarra para mostrar FPS
-    fps = clock.get_fps()
-    fps_text = font.render(f"FPS: {int(fps)}", True, (255, 255, 255))
-    screen.blit(fps_text, (10, 10))
-    # Finaliza a gambiarra para mostrar FPS
-
+    user_interface.update()
     pygame.display.update()                             # Atualiza a tela
     clock.tick(config.FPS)                              # Controla os frames por segundo
 
