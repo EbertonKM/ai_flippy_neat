@@ -8,6 +8,9 @@ from GameObjects.Bird import Bird
 # Inicializar o Pygame 
 pygame.init()
 
+# Instancia clock
+clock = pygame.time.Clock()
+
 # Configurações da tela
 screen = pygame.display.set_mode(config.WINDOW_SIZE)           # Define o tamanho da tela
 pygame.display.set_caption("Flappy")
@@ -19,16 +22,14 @@ floor = Floor(sprite_name="base.png", speed=config.BACKGROUND_SPEED*3, chunk_cou
 floor.load_sprite()
 
 # Carrega o passáro
-bird = Bird(name="José", color=3, x=config.WINDOW_SIZE[0]/3, y=config.WINDOW_SIZE[1]/2)
+bird = Bird(name="José", color="yellow", x=config.WINDOW_SIZE[0]/3, y=config.WINDOW_SIZE[1]/2)
 
 # Controle de animação
 ANIMATION_SPEED = 580
 frame_count = 0
 
 # Font do texto
-# font = pygame.font.SysFont("Roboto Slab", 36)
-# text = font.render("Hello World", True, (255, 255, 255))
-# text_rect = text.get_rect(center=(config.WINDOW_SIZE[0]//2, config.WINDOW_SIZE[1]//2))
+font = pygame.font.Font(None, 36)
 
 # Loop do jogo
 running = True
@@ -48,10 +49,15 @@ while(running):
 
     # Atualiza o passário
     bird.move()
-
-    # screen.blit(text, text_rect)
     screen.blit(bird.load_frame(), (bird.x, bird.y))
 
+    # Começa a gambiarra para mostrar FPS
+    fps = clock.get_fps()
+    fps_text = font.render(f"FPS: {int(fps)}", True, (255, 255, 255))
+    screen.blit(fps_text, (10, 10))
+    # Finaliza a gambiarra para mostrar FPS
+
     pygame.display.update()                             # Atualiza a tela
+    clock.tick(config.FPS)                              # Controla os frames por segundo
 
 pygame.quit()

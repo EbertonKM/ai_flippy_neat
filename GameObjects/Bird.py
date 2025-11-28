@@ -4,15 +4,9 @@ import config
 import random
 
 class Bird:
-    ROTATION_MAX_ANGLE = 25
-    ROTATION_SPEED = 20
-    GRAVITY = 0.0002
-    FLAP_POWER = -2
-    AVALIABLE_COLORS = ("blue", "red", "yellow", "black")
-
     def __init__(self, name, color, x, y):
         self.name = name
-        self.color = self.AVALIABLE_COLORS[color]
+        self.color = color
         self.x = x
         self.y = y
         self.angle = 0
@@ -20,6 +14,11 @@ class Bird:
         self.height = self.y
         self.frames = None
         self.cframes = None
+
+        # Garante que a cor seja válida
+        if self.color not in config.AVALIABLE_COLORS:
+            self.color = config.AVALIABLE_COLORS[random.choice(range(len(config.AVALIABLE_COLORS)))]
+            print(f"[WARNING] Cor inválida para o pássaro {self.name}. Definindo cor aleatória: {self.color}")
 
     def load_frame(self): # Completamente errado
         for i in (1, 3):
@@ -29,7 +28,7 @@ class Bird:
     
     def move(self):
         if self.velocity < config.MAX_FALLING_SPEED:
-            self.velocity += self.GRAVITY
+            self.velocity += config.GRAVITY
         self.y += self.velocity
 
         if self.y > 530:
@@ -37,8 +36,8 @@ class Bird:
 
         # Falta aplicar isso de fato ao sprite
         if self.velocity < 0 or self.y < self.height + 50:
-            if self.angle < self.ROTATION_MAX_ANGLE:
-                self.angle = self.ROTATION_MAX_ANGLE
+            if self.angle < config.ROTATION_MAX_ANGLE:
+                self.angle = config.ROTATION_MAX_ANGLE
         else:
             if self.angle > -90:
-                self.angle -= self.ROTATION_SPEED
+                self.angle -= config.ROTATION_SPEED
