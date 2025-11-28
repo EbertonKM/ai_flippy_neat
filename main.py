@@ -21,18 +21,12 @@ user_interface = InterfaceManager(screen, clock)
 # Carrega o background
 background = Background(sprite_name="background-day.png", speed=config.BACKGROUND_SPEED, chunk_count=3)
 background.load_sprite()
-floor = Floor(sprite_name="base.png", speed=config.BACKGROUND_SPEED*3, chunk_count=3, y=400)
+floor = Floor(sprite_name="base.png", speed=config.BACKGROUND_SPEED*3, chunk_count=3, y=config.FLOOR_HEIGHT)
 floor.load_sprite()
 
 # Carrega o passáro
-bird = Bird(name="José", color="yellow", x=config.WINDOW_SIZE[0]/3, y=config.WINDOW_SIZE[1]/2)
-
-# Controle de animação
-ANIMATION_SPEED = 580
-frame_count = 0
-
-# Font do texto
-font = pygame.font.Font(None, 36)
+bird = Bird(name="José", color="yellow", x=config.WINDOW_SIZE[0]//3, y=config.WINDOW_SIZE[1]//2)
+bird.load_frames()
 
 # Loop do jogo
 running = True
@@ -42,7 +36,7 @@ while(running):
         if event.type == pygame.QUIT:                   # Se o evento foi "Fechar"
             running = False                             # Sai do loop e fecha o jogo
     
-    # Atualiza o fundo e o piso
+    # Atualiza a posição fundo e o piso
     background.move()
     floor.move()
 
@@ -52,7 +46,7 @@ while(running):
 
     # Atualiza o passário
     bird.move()
-    screen.blit(bird.load_frame(), (bird.x, bird.y))
+    bird.draw(screen)
     bird.show_name(screen)
 
     user_interface.update()

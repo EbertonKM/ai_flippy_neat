@@ -1,6 +1,8 @@
 import os
 
 # Configurações do sistema
+DEBUG = True
+
 WINDOW_SIZE = (288, 512)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -10,6 +12,9 @@ FPS = 60
 
 # Configurações do background
 BACKGROUND_SPEED = 1
+
+# Configurações do chão
+FLOOR_HEIGHT = 400
 
 # Configurações do pássaro
 GRAVITY = 0.5
