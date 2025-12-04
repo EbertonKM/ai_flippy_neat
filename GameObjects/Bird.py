@@ -41,7 +41,6 @@ class Bird:
         if self.y > 530:
             self.y = -30
 
-        # Falta aplicar isso de fato ao sprite
         if self.velocity < 0 or self.y < self.height + 50:
             if self.angle < config.ROTATION_MAX_ANGLE:
                 self.angle = config.ROTATION_MAX_ANGLE
@@ -66,6 +65,7 @@ class Bird:
 
         if config.DEBUG:
             pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), self.collider_radius, 1)
+
 
     # Exibe o nome do passáro acima dele
     def show_name(self, screen):
